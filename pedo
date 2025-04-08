@@ -1,0 +1,74 @@
+public class Polinomio {
+
+    private int[] terminos;
+
+    public Polinomio(int[] terminos) {
+        this.terminos = terminos;
+    }
+
+    public Polinomio derivar() {
+        int[] terminosDerivada = new int[this.longitud() - 1];
+        for (int exponente = this.terminos.length-1; exponente > 0; exponente--) {
+            int exponenteDerivada = exponente - 1;
+            terminosDerivada[exponenteDerivada] = this.getTermino(exponente) * (exponente);
+        }
+        return new Polinomio(terminosDerivada);
+    }
+
+    private int getTermino(int indice) {
+        return terminos[indice];
+    }
+
+    private int longitud() {
+        return terminos.length;
+    }
+
+    public void mostrarTerminos() {
+    int exponente = terminos.length - 1;
+    boolean esPrimerTermino = true;
+
+    for (int i = 0; i < terminos.length; i++) {
+        if (terminos[i] != 0) {
+            if (!esPrimerTermino) {
+                if (terminos[i] > 1) {
+                    System.out.print("+" + terminos[i]);
+                } else if (terminos[i] == 1) {
+                    System.out.print("");
+                } else {
+                    System.out.print(terminos[i]);
+                }
+            } else {
+                System.out.print(terminos[i]);
+                esPrimerTermino = false;
+            }
+
+            if (exponente > 1) {
+                System.out.print("x^" + exponente);
+            } else if (exponente == 1) {
+                System.out.print("x");
+            } else {
+                System.out.print(" ");
+            }
+        }
+        exponente--;
+    }
+    System.out.println();
+}
+
+}
+
+---
+public class Cliente {
+    public static void main(String[] args) {
+        Polinomio polinomio = new Polinomio(new int[] { 1, 2, 3 });
+        Polinomio derivada = polinomio.derivar();
+
+        System.out.print("Polinomio: ");
+        polinomio.mostrarTerminos();
+        System.out.println();
+        
+        System.out.print("Derivada: ");
+        derivada.mostrarTerminos();
+        System.out.println();
+    }
+}
